@@ -1,0 +1,37 @@
+
+// // Need to rethink this problem. Should be able to use operate which takes 2 values and an operator
+
+
+123124 +
+display updated above
+
+
+/// function should (input1, input2, operation)
+// display => input
+input = 132546
+display
+// if we add (+) => operation = '+'
+operation = +
+//              ==> set input1 = input
+input1 = 132546
+//                ==> set input = []
+input = []
+(no need to display until we start entering numbers)
+
+2 +
+dipslyay updated above
+// //// How do we recognize input 2
+// add again
+    // if input1 != ''
+        true
+    //     then input 2 = input
+        input2 = 2
+    //     input = somefunction(input1,input2, operation)
+        input = 132546
+// operation
+operation = +
+// 
+input2 = []
+input1 = input
+input = []
+/////////////////////////////////////////////////////////////
