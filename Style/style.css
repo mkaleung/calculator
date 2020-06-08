@@ -108,6 +108,7 @@ body {
 }
 
 .branding p {
+    pointer-events: none;
     position: absolute;
     top: 50%;
     width:100%;
@@ -237,7 +238,7 @@ body {
     position:absolute;
     top: 50%;
     left: 50%;
-    transform:translate(260%,-960%);
+    transform:translate(260%,-975%);
     box-shadow: none;
     font-family: 'Saira Stencil One', cursive;
     font-weight: 300;
@@ -253,6 +254,7 @@ body {
     margin-top: 5px;
 }
 #helpBar {
+    pointer-events: none;
     font-family: 'Digital7', 'Digital', sans-serif;
     position: absolute;
     top: 50%;
