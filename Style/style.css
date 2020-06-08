@@ -1,3 +1,13 @@
+/* Disable text select (mainly for mobile accidental drags) */
+.disable-select {
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none;   /* Chrome/Safari/Opera */
+    -khtml-user-select: none;    /* Konqueror */
+    -moz-user-select: none;      /* Firefox */
+    -ms-user-select: none;       /* Internet Explorer/Edge */
+    user-select: none;           /* Non-prefixed version, currently supported by any browser but < IE9 */
+}
+
 /* For personal use only
 https://www.1001fonts.com/digital-dismay-font.html */
 @font-face{
@@ -19,6 +29,7 @@ https://www.1001fonts.com/digital-7-font.html */
 html {
     overflow: hidden;
 }
+
 button {
     font-weight: bolder;
     font-size: 1.2em;
@@ -31,13 +42,14 @@ button {
     outline: none;
     border: none;
     box-shadow: 0 6px #999;
+    
+    cursor: pointer;
 }
 
 .operationButton {
     background-color: #818565;
     /* box-shadow: 0 6px #999;
     border: none; */
-    cursor: pointer;
 }
 
 #\= {
@@ -214,4 +226,77 @@ body {
     '. . . equal'
     '. . . equal';
     background-color: #3E373D;
+}
+
+#help {
+    font-size: 1em;
+    margin:auto;
+    height:auto;
+    width: auto;
+    padding: 4px;
+    position:absolute;
+    top: 50%;
+    left: 50%;
+    transform:translate(260%,-960%);
+    box-shadow: none;
+    font-family: 'Saira Stencil One', cursive;
+    font-weight: 300;
+    background-color: #c0c4c2;
+    z-index:1;
+    
+}
+
+#helpBar h1 {
+    font-weight:bolder;
+}
+#helpBar li {
+    margin-top: 5px;
+}
+#helpBar {
+    font-family: 'Digital7', 'Digital', sans-serif;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform:translate(-50%,-120%);
+    border-radius: 15px;
+    padding: 10px;
+    background-color: #A2AF77;
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+    width: 340px;
+    z-index: 1;
+    transition: opacity 0.5s ease-in-out;
+}
+
+ .hide {
+    opacity: 0;
+  }
+  .show {
+    opacity: 0.9;
+  }
+  
+.active {
+    outline:none;
+    background-color:#A2AF77 !important;
+}
+
+
+footer {
+    font-family: 'Josefin Sans', sans-serif;
+    width: 100%;
+    padding: 1.5vh 0 1.5vh 0;
+    margin: 0;
+    background-image: linear-gradient(#2a4d69, 	#4b86b4);  
+    text-align: center;
+    position:absolute;
+    bottom:0px;
+    color:#e7eff6;
+    font-size: 1.5vh;
+}
+
+footer a{
+    
+    color:#e7eff6;
+    text-decoration: none;
 }

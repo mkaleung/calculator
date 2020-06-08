@@ -3,15 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <link href="https://fonts.googleapis.com/css2?family=Saira+Stencil+One&display=swap" rel="stylesheet">
-    
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
     <link rel="shortcut icon" href="Style/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="Style/reset.css">
     <link rel="stylesheet" href="Style/style.css">
-    <title>Calcatron 200</title>
+    <title>CALCATRON 200</title>
 </head>
 <body>
-    <div class="calculatorBody">
+    <button id="help">HELP</button>
+    <div id="helpBar" class="hide">
+        <h1>CALCATRON 200 accepts Keyboard & Numpad Inputs:</h1>
+        <ul>
+            <li>&ensp;&ensp;&ensp;&ensp;   "+" for Addition</li>
+        
+            <li>&ensp;&ensp;&ensp;&ensp;    "-" for Subtraction</li>
+            <li>&ensp;&ensp;&ensp;&ensp;   "x" or "*" for Multiplication</li>
+            <li>&ensp;&ensp;&ensp;&ensp;    "/" for Division</li>
+            <li>&ensp;&ensp;&ensp;&ensp;    "." for Decimal</li>
+            <li>&ensp;&ensp;&ensp;&ensp;    "Tab" to toggle Positive/Negative sign</li>
+            <li>&ensp;&ensp;&ensp;&ensp;    "Enter" for Equal/Solve</li>
+
+            <li>&ensp;&ensp;&ensp;&ensp;"Backspace" to delete last entry</li>
+            <li>&ensp;&ensp;&ensp;&ensp;"ESC" for C [Clear] or CE [Clear Entry]</li>
+        </ul>
+
+    </div>
+    <div class="calculatorBody disableSelection;">
         <div class="branding"><p>CALCATRON 200</p></div>
         <div class="calculator">
             <div class="screen">
@@ -48,6 +66,9 @@
             </div>
         </div>
     </div>
+    <footer>
+        <p>Made by <a href="https://github.com/jincrypt" target="_blank">Angus Leung</a></p>
+    </footer>
     <script src="./Script/apps.js"></script>
 </body>
 </html>

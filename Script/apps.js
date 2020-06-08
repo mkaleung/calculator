@@ -64,7 +64,8 @@ function keyEvent(e) {
     } else {
         switch(e.keyCode) {
             case 9:
-                // tab key, do nothing, remove if we can't select
+                document.getElementById('+-').classList.add('keyPress');
+                return operate('+-');
                 break;
             case 111: case 19:                
                 document.getElementById('/').classList.add('keyPress');
@@ -243,3 +244,15 @@ function updateDisplay() {
         }
     return document.querySelector('.display').textContent = displayedNumber;
 }
+
+// Toggle Help Button
+document.querySelector('#help').onclick = function() {
+    let element = document.querySelector('#helpBar');
+    if (element.className === 'hide') {
+      element.className = 'show';
+      document.querySelector('#help').className = 'active';
+    } else {
+      element.className = 'hide';
+      document.querySelector('#help').className = '';
+    }
+  }
