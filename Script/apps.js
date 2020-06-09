@@ -63,7 +63,10 @@ function keyEvent(e) {
         return operate(String(e.keyCode - 96));
     } else {
         switch(e.keyCode) {
-            case 9:
+            case 72:
+                document.getElementById('help').classList.add('keyPress');
+                return document.getElementById('help').click();
+            case 77:
                 document.getElementById('+-').classList.add('keyPress');
                 return operate('+-');
                 break;
