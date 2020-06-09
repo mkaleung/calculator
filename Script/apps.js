@@ -133,6 +133,8 @@ function operate(operation) {
             }
             break;
         case '+-':
+            // Resets current flag as a change is made to displayedNumber
+            isCurrent = false;
             if (displayedNumber != '0') {        
                 if (displayedNumber[0] == '-') {
                     displayedNumber = displayedNumber.slice(1);
@@ -146,6 +148,7 @@ function operate(operation) {
         case '+': case '-': case '*': case '/': case '=':
             if (isCurrent && operation != '=') {
                 // Updates if user changes operation before entering second value.
+                // firstValue = displayedNumber;
                 previousOperator = operation;
                 displayedNumber = '0';
                 return;
@@ -169,7 +172,7 @@ function operate(operation) {
                     firstValue = displayedNumber;
                     secondValue = '';
                 
-                if (operation != '='){
+                if (operation != '=') {
                     previousOperator = operation;
                     displayedNumber = '0';
                 } else {
