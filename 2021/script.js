@@ -21,6 +21,7 @@ function operate(operator, a, b) {
 
 
 let displayedNumber = '0';
+let lastOperation = ''
 
 function updateDisplay() {
     document.querySelector('#display').textContent = displayedNumber;
@@ -51,3 +52,38 @@ decimalButton.addEventListener('click', (e) => {
     }
     updateDisplay();
 });
+
+// Set up +-
+let plusMinusButton = document.querySelector('#\\+\\-');
+plusMinusButton.addEventListener('click', (e) => {
+    if (displayedNumber.includes('-')) {
+        displayedNumber = displayedNumber.slice(1);
+    } else {
+        displayedNumber = '-' + displayedNumber;
+    }
+    updateDisplay();
+})
+
+// Setup delete and clear button
+let deleteButton = document.querySelector('#delete');
+deleteButton.addEventListener('click', (e) => {
+    if (displayedNumber != '0') {
+        if (displayedNumber.length > 2
+                || (displayedNumber.length > 1 && displayedNumber[0] != '-')) {
+            displayedNumber = displayedNumber.slice(0, -1);
+            updateDisplay();
+        } else if (displayedNumber.length == 1 
+                || (displayedNumber.length == 2 && displayedNumber[0] === '-')) {
+            displayedNumber = '0';
+            updateDisplay();
+        } 
+    }
+})
+
+let clearButton = document.querySelector('#clear');
+clearButton.addEventListener('click', (e) => {
+    displayedNumber = '0';
+    updateDisplay();
+})
+
+// Think about how to save history? or how to implement operations
