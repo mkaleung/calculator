@@ -1,40 +1,61 @@
 // Math Operations
+let cf = 10; // correction factor for floating point arithmetic
+
 function add(a, b) {
-    return a + b;
+    return String(Number(a) + Number(b));
 }
 
 function subtract(a, b) {
-    return a - b;
+    return String(Number(a) - Number(b));
 }
 
 function multiply(a, b) { 
-    return a * b;
+    return String(
+        (Number(a) * cf) * (Number(b) * cf) / (cf * cf)
+    );
 }
 
 function divide(a, b) { 
-    return a / b;
+    return String(
+        (Number(a) * cf) / (Number(b) * cf) / (cf * cf)
+    );
 }
 
 function operate(operator, a, b) {
     return operator(a, b);
 }
 
+let operatorMap = {
+    "+": add,
+    "-": subtract,
+    "*": multiply,
+    "/": divide
+}
+
 
 let displayedNumber = '0';
-let lastOperation = ''
+let truncatedNumber = '0';
+let storedNumber = '';
+let operation = '';
+let equalFlag = false;
 
-function updateDisplay() {
-    document.querySelector('#display').textContent = displayedNumber;
+function updateDisplay(value) {
+    document.querySelector('#display').textContent = value;
 }
+updateDisplay(displayedNumber);
+// TODO:
+// Display shows 11 characters
+// Positive is if length > 11 turn into e22
+
 
 // Set up numbers to click
 let numberButtons = document.querySelectorAll('button.input');
 numberButtons.forEach((button) => button.addEventListener('click', (e) => {
-        if (displayedNumber === '0') {
+    if (displayedNumber === '0') {  
             displayedNumber = '';
         }
         displayedNumber += button.id
-        updateDisplay();
+        updateDisplay(displayedNumber);
     })
 );
 
@@ -45,23 +66,24 @@ decimalButton.addEventListener('click', (e) => {
         return;
     }
 
-    if (displayedNumber === 0) {
+    if (displayedNumber === '0' || !displayedNumber) {
         displayedNumber = '0.';
     } else {
         displayedNumber += '.';
     }
-    updateDisplay();
+    updateDisplay(displayedNumber);
 });
 
 // Set up +-
 let plusMinusButton = document.querySelector('#\\+\\-');
 plusMinusButton.addEventListener('click', (e) => {
+    if (displayedNumber === '0' || !displayedNumber) {return}
     if (displayedNumber.includes('-')) {
         displayedNumber = displayedNumber.slice(1);
     } else {
         displayedNumber = '-' + displayedNumber;
     }
-    updateDisplay();
+    updateDisplay(displayedNumber);
 })
 
 // Setup delete and clear button
@@ -71,19 +93,62 @@ deleteButton.addEventListener('click', (e) => {
         if (displayedNumber.length > 2
                 || (displayedNumber.length > 1 && displayedNumber[0] != '-')) {
             displayedNumber = displayedNumber.slice(0, -1);
-            updateDisplay();
+            updateDisplay(displayedNumber);
         } else if (displayedNumber.length == 1 
                 || (displayedNumber.length == 2 && displayedNumber[0] === '-')) {
             displayedNumber = '0';
-            updateDisplay();
+            updateDisplay(displayedNumber);
         } 
     }
 })
 
+function clearFunction() {
+    displayedNumber = '0';
+    truncatedNumber = '0';
+    storedNumber = '';
+    operation = '';
+    updateDisplay(displayedNumber);
+}
+
+
 let clearButton = document.querySelector('#clear');
 clearButton.addEventListener('click', (e) => {
-    displayedNumber = '0';
-    updateDisplay();
+    clearFunction();
 })
 
 // Think about how to save history? or how to implement operations
+
+let operatorButtons = document.querySelectorAll('button.operator');
+operatorButtons.forEach((button) => button.addEventListener('click', (e) => {
+    // Allows for continuing an operation after equal was pressed
+    if (equalFlag) {
+        equalFlag = false;
+        operation = '';
+    }
+
+    if (!storedNumber) {
+        storedNumber = displayedNumber;
+        operation = button.id; 
+        displayedNumber = ''; 
+    } else if (storedNumber && !operation) { // Case for if equal was pressed, then an operator
+        operation = button.id;
+        updateDisplay(storedNumber);
+        displayedNumber = '';
+    } else {
+        storedNumber = operate(operatorMap[operation],storedNumber, displayedNumber);
+        updateDisplay(storedNumber);
+        displayedNumber = '';
+        operation = button.id;
+    }
+}))
+
+
+let equalButton = document.querySelector('button#\\=');
+equalButton.addEventListener('click', (e) => {
+    // Below implementation allows for equal to repeat last operation on displayed result (i.e. 10 + 5 = 15 = 20 = 25, etc)
+    if (displayedNumber, operation, storedNumber) {
+        storedNumber = operate(operatorMap[operation], storedNumber, displayedNumber);
+        updateDisplay(storedNumber);
+        equalFlag = true;
+    }
+})
