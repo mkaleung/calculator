@@ -40,7 +40,17 @@ let operation = '';
 let equalFlag = false;
 
 function updateDisplay(value) {
-    document.querySelector('#display').textContent = value;
+    if (value.length <= 11) {
+        document.querySelector('#display').textContent = value;
+    } else if (value.length > 11) {
+        // CURRENT ISSUE::: Javascript uses exponents too, so if they show i.e. 1.212312938129e24, then that messes with my truncation.  value.length doesn't work.
+        // Also have to consider negative exp (decimals) for scientific notation
+        let valueExp = value.length - 1;
+        value = String(value / (10 ** (valueExp)));
+        value = value.substr(0,(11 - String(valueExp).length - 1));
+        value += `E${valueExp}`;
+        document.querySelector('#display').textContent = value;
+    }
 }
 updateDisplay(displayedNumber);
 // TODO:
@@ -51,11 +61,13 @@ updateDisplay(displayedNumber);
 // Set up numbers to click
 let numberButtons = document.querySelectorAll('button.input');
 numberButtons.forEach((button) => button.addEventListener('click', (e) => {
+    // Do not allow inputs > 11 digits (Design Choice)
+    if (displayedNumber.length >= 11) {return}
     if (displayedNumber === '0') {  
             displayedNumber = '';
         }
-        displayedNumber += button.id
-        updateDisplay(displayedNumber);
+    displayedNumber += button.id
+    updateDisplay(displayedNumber);
     })
 );
 
