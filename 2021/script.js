@@ -38,11 +38,14 @@ let truncatedNumber = '0';
 let storedNumber = '';
 let operation = '';
 let equalFlag = false;
+const screenOutput = document.querySelector('#display');
 const screenLength = 11;
 
 function updateDisplay(value) {
-    if (value.length <= screenLength) {
-        document.querySelector('#display').textContent = value;
+    if (value === 'Infinity') {
+        screenOutput.textContent = "ERROR";
+    } else if (value.length <= screenLength) {
+        screenOutput.textContent = value;
     } else if (value.length > screenLength) {
         let result = '';
 
@@ -60,7 +63,7 @@ function updateDisplay(value) {
             result = result.substr(0,(screenLength - String(valueExp).length - 1));
             result += `E${valueExp}`;
         }
-        document.querySelector('#display').textContent = result;
+        screenOutput.textContent = result;
     }
 }
 updateDisplay(displayedNumber);
