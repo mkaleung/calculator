@@ -38,31 +38,38 @@ let truncatedNumber = '0';
 let storedNumber = '';
 let operation = '';
 let equalFlag = false;
+const screenLength = 11;
 
 function updateDisplay(value) {
-    if (value.length <= 11) {
+    if (value.length <= screenLength) {
         document.querySelector('#display').textContent = value;
-    } else if (value.length > 11) {
-        // CURRENT ISSUE::: Javascript uses exponents too, so if they show i.e. 1.212312938129e24, then that messes with my truncation.  value.length doesn't work.
-        // Also have to consider negative exp (decimals) for scientific notation
-        let valueExp = value.length - 1;
-        value = String(value / (10 ** (valueExp)));
-        value = value.substr(0,(11 - String(valueExp).length - 1));
-        value += `E${valueExp}`;
-        document.querySelector('#display').textContent = value;
+    } else if (value.length > screenLength) {
+        let result = '';
+
+        // If Javascript already stored number as scientific notation
+        if (value.includes('e')) {
+            let [number, exp] = value.split('e');
+            exp = Number(exp);
+            number = number.slice(0, screenLength - String(exp).length - 1)
+                result = number + 'E' + exp;
+                
+        } else {
+        // If number is greater than screenLength, convert to scientific notation
+            let valueExp = value.length - 1;
+            result = String(value / (10 ** (valueExp)));
+            result = result.substr(0,(screenLength - String(valueExp).length - 1));
+            result += `E${valueExp}`;
+        }
+        document.querySelector('#display').textContent = result;
     }
 }
 updateDisplay(displayedNumber);
-// TODO:
-// Display shows 11 characters
-// Positive is if length > 11 turn into e22
-
 
 // Set up numbers to click
 let numberButtons = document.querySelectorAll('button.input');
 numberButtons.forEach((button) => button.addEventListener('click', (e) => {
-    // Do not allow inputs > 11 digits (Design Choice)
-    if (displayedNumber.length >= 11) {return}
+    // Do not allow inputs > screenLength (Design Choice)
+    if (displayedNumber.length >= screenLength) {return}
     if (displayedNumber === '0') {  
             displayedNumber = '';
         }
