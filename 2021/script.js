@@ -64,43 +64,32 @@ function updateDisplay(value) {
         screenOutput.textContent = result;
     }
 }
-updateDisplay(displayedNumber);
+updateDisplay(displayedNumber); // Initialization *I guess i can remove this if i just set HTML to 0 instead of 0000
 
-
-// Set up numbers to click
-let numberButtons = document.querySelectorAll('button.input');
-numberButtons.forEach((button) => button.addEventListener('click', (e) => {
+function appendNumber(number)  {
     // Do not allow inputs > screenLength (Design Choice)
     if (displayedNumber.length >= screenLength) {return}
 
     if (displayedNumber === '0') {  
             displayedNumber = '';
         }
-    displayedNumber += button.id
+    displayedNumber += number;
     updateDisplay(displayedNumber);
-    })
-);
+}
 
-
-// Set up decimal
-let decimalButton = document.querySelector('#\\.');
-decimalButton.addEventListener('click', (e) => {
+function appendDecimal() {
     if (displayedNumber.includes('.')) {
         return;
     }
-
     if (displayedNumber === '0' || !displayedNumber) {
         displayedNumber = '0.';
     } else {
         displayedNumber += '.';
     }
     updateDisplay(displayedNumber);
-});
+}
 
-
-// Set up +-
-let plusMinusButton = document.querySelector('#\\+\\-');
-plusMinusButton.addEventListener('click', (e) => {
+function plusMinus() {
     if (displayedNumber === '0' || !displayedNumber) {return}
     if (displayedNumber.includes('-')) {
         displayedNumber = displayedNumber.slice(1);
@@ -108,12 +97,17 @@ plusMinusButton.addEventListener('click', (e) => {
         displayedNumber = '-' + displayedNumber;
     }
     updateDisplay(displayedNumber);
-})
+}
 
+function clearFunction() {
+    displayedNumber = '0';
+    truncatedNumber = '0';
+    storedNumber = '';
+    operation = '';
+    updateDisplay(displayedNumber);
+}
 
-// Setup delete and clear button
-let deleteButton = document.querySelector('#delete');
-deleteButton.addEventListener('click', (e) => {
+function deleteFunction() {
     if (displayedNumber != '0') {
         if (displayedNumber.length > 2
                 || (displayedNumber.length > 1 && displayedNumber[0] != '-')) {
@@ -125,18 +119,37 @@ deleteButton.addEventListener('click', (e) => {
             updateDisplay(displayedNumber);
         } 
     }
+}
+// Set up numbers to click
+let numberButtons = document.querySelectorAll('button.input');
+numberButtons.forEach((button) => button.addEventListener('click', (e) => {
+    appendNumber(button.id);
+}));
+
+
+// Set up decimal
+let decimalButton = document.querySelector('#\\.');
+decimalButton.addEventListener('click', (e) => {
+    appendDecimal();
+});
+
+
+// Set up +-
+let plusMinusButton = document.querySelector('#\\+\\-');
+plusMinusButton.addEventListener('click', (e) => {
+    plusMinus();
 })
 
 
-function clearFunction() {
-    displayedNumber = '0';
-    truncatedNumber = '0';
-    storedNumber = '';
-    operation = '';
-    updateDisplay(displayedNumber);
-}
+// Set up delete
+let deleteButton = document.querySelector('#delete');
+deleteButton.addEventListener('click', (e) => {
+    deleteFunction();
+})
 
 
+
+// Set up clear button
 let clearButton = document.querySelector('#clear');
 clearButton.addEventListener('click', (e) => {
     clearFunction();
@@ -180,5 +193,19 @@ equalButton.addEventListener('click', (e) => {
 
 // TODO
 // KEYBOARD SUPPORT
+// 1 to 9 is 49 to 57, 0 is 48
+// numpad 0 to 9 is 96 to 105
+// numpad multiply	106
+// add	107
+// subtract	109
+// = is 61 in Firefox but 187 in other browsers.
+// - is 173 in Firefox but 189 in other browsers.
+// decimal point	110
+// period 190
+// divide	111
+// equal sign	187
+// enter	13
+// backspace	8
+// x	88
 // REVIEW CSS, MERGE
 // EXTRA EXTRA CREDIT: MEMORY/DISPLAY
