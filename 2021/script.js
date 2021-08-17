@@ -48,16 +48,14 @@ function updateDisplay(value) {
         screenOutput.textContent = value;
     } else if (value.length > screenLength) {
         let result = '';
-
-        // If Javascript already stored number as scientific notation
-        if (value.includes('e')) {
+        
+        if (value.includes('e')) { // If Javascript already stored number as scientific notation
             let [number, exp] = value.split('e');
             exp = Number(exp);
             number = number.slice(0, screenLength - String(exp).length - 1)
                 result = number + 'E' + exp;
                 
-        } else {
-        // If number is greater than screenLength, convert to scientific notation
+        } else { // If number is greater than screenLength, convert to scientific notation
             let valueExp = value.length - 1;
             result = String(value / (10 ** (valueExp)));
             result = result.substr(0,(screenLength - String(valueExp).length - 1));
@@ -73,6 +71,7 @@ let numberButtons = document.querySelectorAll('button.input');
 numberButtons.forEach((button) => button.addEventListener('click', (e) => {
     // Do not allow inputs > screenLength (Design Choice)
     if (displayedNumber.length >= screenLength) {return}
+
     if (displayedNumber === '0') {  
             displayedNumber = '';
         }
@@ -142,8 +141,7 @@ clearButton.addEventListener('click', (e) => {
 
 let operatorButtons = document.querySelectorAll('button.operator');
 operatorButtons.forEach((button) => button.addEventListener('click', (e) => {
-    // Allows for continuing an operation after equal was pressed
-    if (equalFlag) {
+    if (equalFlag) { // Allows for continuing an operation after equal was pressed
         equalFlag = false;
         operation = '';
     }
@@ -174,3 +172,9 @@ equalButton.addEventListener('click', (e) => {
         equalFlag = true;
     }
 })
+
+
+// TODO
+// KEYBOARD SUPPORT
+// REVIEW CSS, MERGE
+// EXTRA EXTRA CREDIT: MEMORY/DISPLAY
