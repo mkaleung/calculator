@@ -25,14 +25,13 @@ function operate(operator, a, b) {
     return operator(a, b);
 }
 
+
 let operatorMap = {
     "+": add,
     "-": subtract,
     "*": multiply,
     "/": divide
-}
-
-
+};
 let displayedNumber = '0';
 let truncatedNumber = '0';
 let storedNumber = '';
@@ -41,6 +40,7 @@ let equalFlag = false;
 const screenOutput = document.querySelector('#display');
 const screenLength = 11;
 
+
 function updateDisplay(value) {
     if (value === 'Infinity') {
         screenOutput.textContent = "ERROR";
@@ -48,7 +48,7 @@ function updateDisplay(value) {
         screenOutput.textContent = value;
     } else if (value.length > screenLength) {
         let result = '';
-        
+
         if (value.includes('e')) { // If Javascript already stored number as scientific notation
             let [number, exp] = value.split('e');
             exp = Number(exp);
@@ -66,6 +66,7 @@ function updateDisplay(value) {
 }
 updateDisplay(displayedNumber);
 
+
 // Set up numbers to click
 let numberButtons = document.querySelectorAll('button.input');
 numberButtons.forEach((button) => button.addEventListener('click', (e) => {
@@ -79,6 +80,7 @@ numberButtons.forEach((button) => button.addEventListener('click', (e) => {
     updateDisplay(displayedNumber);
     })
 );
+
 
 // Set up decimal
 let decimalButton = document.querySelector('#\\.');
@@ -95,6 +97,7 @@ decimalButton.addEventListener('click', (e) => {
     updateDisplay(displayedNumber);
 });
 
+
 // Set up +-
 let plusMinusButton = document.querySelector('#\\+\\-');
 plusMinusButton.addEventListener('click', (e) => {
@@ -106,6 +109,7 @@ plusMinusButton.addEventListener('click', (e) => {
     }
     updateDisplay(displayedNumber);
 })
+
 
 // Setup delete and clear button
 let deleteButton = document.querySelector('#delete');
@@ -123,6 +127,7 @@ deleteButton.addEventListener('click', (e) => {
     }
 })
 
+
 function clearFunction() {
     displayedNumber = '0';
     truncatedNumber = '0';
@@ -137,7 +142,6 @@ clearButton.addEventListener('click', (e) => {
     clearFunction();
 })
 
-// Think about how to save history? or how to implement operations
 
 let operatorButtons = document.querySelectorAll('button.operator');
 operatorButtons.forEach((button) => button.addEventListener('click', (e) => {
