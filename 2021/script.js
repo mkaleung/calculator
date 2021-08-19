@@ -67,6 +67,9 @@ function updateDisplay(value) {
 updateDisplay(displayedNumber); // Initialization *I guess i can remove this if i just set HTML to 0 instead of 0000
 
 function appendNumber(number)  {
+    if (equalFlag) {
+        clearFunction();
+    }
     // Do not allow inputs > screenLength (Design Choice)
     if (displayedNumber.length >= screenLength) {return}
 
@@ -78,6 +81,9 @@ function appendNumber(number)  {
 }
 
 function appendDecimal() {
+    if (equalFlag) {
+        clearFunction();
+    }
     if (displayedNumber.includes('.')) {
         return;
     }
@@ -89,14 +95,31 @@ function appendDecimal() {
     updateDisplay(displayedNumber);
 }
 
+/*
+9 - 5 = 4
+-4
+=
+-9
+*/
+
 function plusMinus() {
-    if (displayedNumber === '0' || !displayedNumber) {return}
-    if (displayedNumber.includes('-')) {
-        displayedNumber = displayedNumber.slice(1);
+    if (equalFlag) {
+        if (storedNumber === '0' || !storedNumber) {return}
+        if (storedNumber.includes('-')) {
+            storedNumber = storedNumber.slice(1);
+        } else {
+            storedNumber = '-' + storedNumber;
+        }
+        updateDisplay(storedNumber);
     } else {
-        displayedNumber = '-' + displayedNumber;
+        if (displayedNumber === '0' || !displayedNumber) {return}
+        if (displayedNumber.includes('-')) {
+            displayedNumber = displayedNumber.slice(1);
+        } else {
+            displayedNumber = '-' + displayedNumber;
+        }
+        updateDisplay(displayedNumber);
     }
-    updateDisplay(displayedNumber);
 }
 
 function clearFunction() {
@@ -104,6 +127,7 @@ function clearFunction() {
     truncatedNumber = '0';
     storedNumber = '';
     operation = '';
+    equalFlag = false;
     updateDisplay(displayedNumber);
 }
 
@@ -120,6 +144,28 @@ function deleteFunction() {
         } 
     }
 }
+
+function applyOperation(selectOperator) {
+    if (equalFlag) { // Allows for continuing an operation after equal was pressed
+        equalFlag = false;
+        operation = '';
+    }
+    if (!storedNumber) {
+        storedNumber = displayedNumber;
+        operation = selectOperator; 
+        displayedNumber = ''; 
+    } else if (storedNumber && !operation) { // Case for if equal was pressed, then an operator
+        operation = selectOperator;
+        updateDisplay(storedNumber);
+        displayedNumber = '';
+    } else {
+        storedNumber = operate(operatorMap[operation],storedNumber, displayedNumber);
+        updateDisplay(storedNumber);
+        displayedNumber = '';
+        operation = selectOperator;
+    }
+}
+
 // Set up numbers to click
 let numberButtons = document.querySelectorAll('button.input');
 numberButtons.forEach((button) => button.addEventListener('click', (e) => {
@@ -155,28 +201,10 @@ clearButton.addEventListener('click', (e) => {
     clearFunction();
 })
 
-
+//TODO ** How to separate operation so button clicks and keyboard works? Might have to do with optional function inputs i.e. operate(button.id (optional))
 let operatorButtons = document.querySelectorAll('button.operator');
 operatorButtons.forEach((button) => button.addEventListener('click', (e) => {
-    if (equalFlag) { // Allows for continuing an operation after equal was pressed
-        equalFlag = false;
-        operation = '';
-    }
-
-    if (!storedNumber) {
-        storedNumber = displayedNumber;
-        operation = button.id; 
-        displayedNumber = ''; 
-    } else if (storedNumber && !operation) { // Case for if equal was pressed, then an operator
-        operation = button.id;
-        updateDisplay(storedNumber);
-        displayedNumber = '';
-    } else {
-        storedNumber = operate(operatorMap[operation],storedNumber, displayedNumber);
-        updateDisplay(storedNumber);
-        displayedNumber = '';
-        operation = button.id;
-    }
+    applyOperation(button.id);
 }))
 
 
