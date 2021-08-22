@@ -17,7 +17,7 @@ function multiply(a, b) {
 
 function divide(a, b) { 
     return String(
-        (Number(a) * cf) / (Number(b) * cf) / (cf * cf)
+        (Number(a) * cf) / (Number(b) * cf)
     );
 }
 
@@ -66,6 +66,7 @@ function updateDisplay(value) {
 }
 updateDisplay(displayedNumber); // Initialization *I guess i can remove this if i just set HTML to 0 instead of 0000
 
+
 function appendNumber(number)  {
     if (equalFlag) {
         clearFunction();
@@ -79,6 +80,7 @@ function appendNumber(number)  {
     displayedNumber += number;
     updateDisplay(displayedNumber);
 }
+
 
 function appendDecimal() {
     if (equalFlag) {
@@ -94,13 +96,6 @@ function appendDecimal() {
     }
     updateDisplay(displayedNumber);
 }
-
-/*
-9 - 5 = 4
--4
-=
--9
-*/
 
 function plusMinus() {
     if (equalFlag) {
@@ -142,6 +137,14 @@ function deleteFunction() {
             displayedNumber = '0';
             updateDisplay(displayedNumber);
         } 
+    }
+}
+
+function equalFunction() {
+    if (displayedNumber, operation, storedNumber) {
+        storedNumber = operate(operatorMap[operation], storedNumber, displayedNumber);
+        updateDisplay(storedNumber);
+        equalFlag = true;
     }
 }
 
@@ -194,7 +197,6 @@ deleteButton.addEventListener('click', (e) => {
 })
 
 
-
 // Set up clear button
 let clearButton = document.querySelector('#clear');
 clearButton.addEventListener('click', (e) => {
@@ -210,30 +212,46 @@ operatorButtons.forEach((button) => button.addEventListener('click', (e) => {
 
 let equalButton = document.querySelector('button#\\=');
 equalButton.addEventListener('click', (e) => {
-    // Below implementation allows for equal to repeat last operation on displayed result (i.e. 10 + 5 = 15 = 20 = 25, etc)
-    if (displayedNumber, operation, storedNumber) {
-        storedNumber = operate(operatorMap[operation], storedNumber, displayedNumber);
-        updateDisplay(storedNumber);
-        equalFlag = true;
-    }
+    equalFunction();
 })
 
+window.addEventListener('keydown', keyEvent);
+
+function keyEvent(e) {
+    console.log(e.keyCode)
+    // Numbers
+    if (e.keyCode >= 48 && e.keyCode <= 57) {
+        return appendNumber(String(e.keyCode - 48));
+    } else if (e.keyCode >= 96 && e.keyCode <= 105) {
+        return appendNumber(String(e.keyCode - 96));
+    } else {
+        switch(e.keyCode) {
+            case 88: case 106:
+                return applyOperation('*');
+            case 107:
+                return applyOperation('+');
+            case 109: case 189:
+                return applyOperation('-');
+            case 191: case 111:
+                return applyOperation('/');
+            case 110: case 190:
+                return appendDecimal();
+            case 27:
+                return clearButton();
+            case 77:
+                return plusMinus();
+            case 13:
+                return equalFunction();
+            case 8:
+                return deleteFunction();
+        }
+    }
+
+
+}
 
 // TODO
 // KEYBOARD SUPPORT
-// 1 to 9 is 49 to 57, 0 is 48
-// numpad 0 to 9 is 96 to 105
-// numpad multiply	106
-// add	107
-// subtract	109
-// = is 61 in Firefox but 187 in other browsers.
-// - is 173 in Firefox but 189 in other browsers.
-// decimal point	110
-// period 190
-// divide	111
-// equal sign	187
-// enter	13
-// backspace	8
-// x	88
+
 // REVIEW CSS, MERGE
 // EXTRA EXTRA CREDIT: MEMORY/DISPLAY
