@@ -172,7 +172,7 @@ body {
     box-shadow: 5px 5px 15px 0px rgba(6,76,92,0.5);
 }
 
-#calculator {
+.calculator {
     background-color: transparent;
     width: 300px;
     height: 460px;
@@ -184,7 +184,7 @@ body {
     border-top-right-radius: 10px;
 }
 
-#screen {
+.screen {
     font-family: 'Digital7', 'Digital', sans-serif;
     width: 90%;
     margin: 20px auto;
@@ -194,7 +194,7 @@ body {
     
 }
 
-#display {
+.display {
     padding: 0 5px 0 5px;
     text-align: right;
     font-size: 40px;
@@ -202,7 +202,7 @@ body {
     white-space: nowrap;
 }
 
-#numpadIndent {
+.numpadIndent {
     position:relative;
     top: -5px;
     margin: auto;
@@ -212,7 +212,7 @@ body {
     border-radius: 5px;
 }
 
-#numpad {
+.numpad {
     bottom: -5px;
     position:relative;
     margin: auto;
@@ -271,12 +271,12 @@ body {
     transition: opacity 0.5s ease-in-out;
 }
 
-.hide {
+ .hide {
     opacity: 0;
-}
-.show {
+  }
+  .show {
     opacity: 0.9;
-}
+  }
   
 .active {
     outline:none;
