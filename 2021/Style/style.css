@@ -1,0 +1,304 @@
+/* Disable text select (mainly for mobile accidental drags) */
+.disable-select {
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none;   /* Chrome/Safari/Opera */
+    -khtml-user-select: none;    /* Konqueror */
+    -moz-user-select: none;      /* Firefox */
+    -ms-user-select: none;       /* Internet Explorer/Edge */
+    user-select: none;           /* Non-prefixed version, currently supported by any browser but < IE9 */
+}
+
+/* For personal use only
+https://www.1001fonts.com/digital-dismay-font.html */
+@font-face{
+    font-family:'Digital';
+    src: url('../font/digital dismay.otf');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* For personal use only
+https://www.1001fonts.com/digital-7-font.html */
+@font-face{
+    font-family:'Digital7';
+    src: url('../font/digital-7.ttf');
+    font-weight: normal;
+    font-style: normal;
+}
+   
+html {
+    overflow: hidden;
+}
+
+button {
+    font-weight: bolder;
+    font-size: 1.2em;
+    background-color: #ACAEAD;
+    border-radius: 10px;
+    color: black;
+    width: 55px;
+    height: 55px;
+    margin:auto;
+    outline: none;
+    border: none;
+    box-shadow: 0 6px #999;
+    
+    cursor: pointer;
+}
+
+.operationButton {
+    background-color: #818565;
+    /* box-shadow: 0 6px #999;
+    border: none; */
+}
+
+#\= {
+    background-color: #F15A2B;
+    grid-area: equal;
+    height: 90%;
+    padding-top: 10px;
+}
+
+button:active {
+    box-shadow: 0 3px #666;
+    transform: translateY(4px);
+}
+
+
+.keyPress {
+    animation: keyPress 0.1s ease-in-out;
+}
+
+@keyframes keyPress {   
+    0% {box-shadow: 0 6px #666;transform: translateY(0px);}
+    10% {box-shadow: 0 5px #666;transform: translateY(2px);}
+    20%{box-shadow: 0 3px #666;transform: translateY(4px);}
+    30% {box-shadow: 0 3px #666;transform: translateY(4px);}
+    70% {box-shadow: 0 3px #666;transform: translateY(4px);}
+    80% {box-shadow: 0 3px #666;transform: translateY(4px);}
+    90% {box-shadow: 0 5px #666;transform: translateY(2px);}
+    100% {box-shadow: 0 6px #666;transform: translateY(0px);}
+}
+
+body {
+    background-color: #c6c6c6;
+    /* https://www.color-hex.com/color-palette/93601 */
+    background-image: linear-gradient(	#d3dded,#9bc8d7);
+    min-height: 100vh;
+    min-width: 100vw;
+    background-size: 100%;
+}
+
+.branding {
+    position: absolute;
+    top: 37px;
+    left: 15px;
+    width: 150px;
+    height: 25px;
+    text-align: center;
+    box-sizing: border-box;
+
+    background-color: #959FA1;
+    border-radius: 2px;
+    /* https://www.cssmatic.com/box-shadow */
+    box-shadow: inset 0.5px -0.5px 0px 3px rgba(0,0,0,0.3);
+    
+    font-family: 'Saira Stencil One', cursive;
+    text-transform: uppercase;
+}
+
+.branding p {
+    pointer-events: none;
+    position: absolute;
+    top: 50%;
+    width:100%;
+    transform: translateY(-50%);
+    margin:auto;
+}
+
+
+.calculatorBody{
+    height: 570px;
+    width: 350px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform:translate(-50%,-50%);
+
+    background: linear-gradient(#c0c4c2, #c0c4c2),
+    linear-gradient(
+        #c0c4c2 25%,
+        #3c3d30 27%,
+        #8a8a7c 30%,
+        #8a8a7c 32%,
+        #e3e3dc 33%,
+        #c0c4c2 33.5%,
+        #c0c4c2 38%,
+        #3c3d30 40%,
+        #8a8a7c 43%,
+        #8a8a7c 45%,
+        #e3e3dc 46%,
+        #c0c4c2 46.5%,
+        #c0c4c2 51%,
+        #3c3d30 53%,
+        #8a8a7c 56%,
+        #8a8a7c 58%,
+        #e3e3dc 59%,
+        #c0c4c2 59.5%,
+        #c0c4c2 64%,
+        #3c3d30 66%, 
+        #8a8a7c 69%,
+        #8a8a7c 71%,
+        #e3e3dc 72%,
+        #c0c4c2 72.5%,
+        #c0c4c2 77%,
+        #3c3d30 79%,
+        #8a8a7c 82%,
+        #8a8a7c 84%,
+        #e3e3dc 85%,
+        #c0c4c2 85.5%,
+        #c0c4c2 90%,
+        #3c3d30 92%,
+        #8a8a7c 95%,
+        #8a8a7c 97%,
+        #e3e3dc 98%,
+        #c0c4c2 98.5%
+    );
+    /* First gradient 100%, second gradient top 80px only */
+    background-size: 100%, 100% 80px;
+    background-position: 0 80px, top left;
+    background-repeat: no-repeat;
+    border-radius: 8px;
+    box-shadow: 5px 5px 15px 0px rgba(6,76,92,0.5);
+}
+
+#calculator {
+    background-color: transparent;
+    width: 300px;
+    height: 460px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform:translate(-50%,-45%);
+    border-top-left-radius: 10px; 
+    border-top-right-radius: 10px;
+}
+
+#screen {
+    font-family: 'Digital7', 'Digital', sans-serif;
+    width: 90%;
+    margin: 20px auto;
+    height: 45px;
+    background-color: #A2AF77;
+    border-radius: 5px;
+    
+}
+
+#display {
+    padding: 0 5px 0 5px;
+    text-align: right;
+    font-size: 40px;
+    letter-spacing: 3px;
+    white-space: nowrap;
+}
+
+#numpadIndent {
+    position:relative;
+    top: -5px;
+    margin: auto;
+    width: 250px; /*Each button is 60px */
+    height: 360px;
+    background-image: linear-gradient(82deg, rgba(197, 196, 191, 0.75), rgba(109,105,102,0.5));   
+    border-radius: 5px;
+}
+
+#numpad {
+    bottom: -5px;
+    position:relative;
+    margin: auto;
+    width: 240px; /*Each button is 60px */
+    height: 350px;
+    display:grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-areas:
+    '. . . . '
+    '. . . . '
+    '. . . .'
+    '. . . equal'
+    '. . . equal';
+    background-color: #3E373D;
+}
+
+#help {
+    font-size: 1em;
+    margin:auto;
+    height:auto;
+    width: auto;
+    padding: 4px;
+    position:absolute;
+    top: 50%;
+    left: 50%;
+    transform:translate(260%,-975%);
+    box-shadow: none;
+    font-family: 'Saira Stencil One', cursive;
+    font-weight: 300;
+    background-color: #c0c4c2;
+    z-index:1;
+    
+}
+
+#helpBar h1 {
+    font-weight:bolder;
+}
+#helpBar li {
+    margin-top: 5px;
+}
+#helpBar {
+    pointer-events: none;
+    font-family: 'Digital7', 'Digital', sans-serif;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform:translate(-50%,-120%);
+    border-radius: 15px;
+    padding: 10px;
+    background-color: #A2AF77;
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+    width: 340px;
+    z-index: 1;
+    transition: opacity 0.5s ease-in-out;
+}
+
+.hide {
+    opacity: 0;
+}
+.show {
+    opacity: 0.9;
+}
+  
+.active {
+    outline:none;
+    background-color:#A2AF77 !important;
+}
+
+
+footer {
+    font-family: 'Josefin Sans', sans-serif;
+    width: 100%;
+    padding: 1.5vh 0 1.5vh 0;
+    margin: 0;
+    background-image: linear-gradient(#2a4d69, 	#4b86b4);  
+    text-align: center;
+    position:absolute;
+    bottom:0px;
+    color:#e7eff6;
+    font-size: 1.5vh;
+}
+
+footer a{
+    
+    color:#e7eff6;
+    text-decoration: none;
+}
