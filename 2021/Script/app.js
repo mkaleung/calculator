@@ -49,18 +49,27 @@ function updateDisplay(value) {
         screenOutput.textContent = value;
     } else if (value.length > screenLength) {
         let result = '';
-
-        if (value.includes('e')) { // If Javascript already stored number as scientific notation
-            let [number, exp] = value.split('e');
-            exp = Number(exp);
-            number = number.slice(0, screenLength - String(exp).length - 1)
-                result = number + 'E' + exp;
-                
-        } else { // If number is greater than screenLength, convert to scientific notation
-            let valueExp = value.length - 1;
-            result = String(value / (10 ** (valueExp)));
-            result = result.substr(0,(screenLength - String(valueExp).length - 1));
-            result += `E${valueExp}`;
+        
+        // TI-84 Calculators use Scientific Notation if number are > 10**9 or < 10**-3
+        if (Number(value) > 10**9 || Number(value) < 10**-3) {
+            if (value.includes('e')) { // If Javascript already stored number as scientific notation
+                let [number, exp] = value.split('e');
+                exp = Number(exp);
+                number = number.slice(0, screenLength - String(exp).length - 1)
+                    result = number + 'E' + exp;
+                    
+            } else { // If number is greater than screenLength, convert to scientific notation
+                let valueExp = value.length - 1;
+                result = String(value / (10 ** (valueExp)));
+                result = result.substr(0,(screenLength - String(valueExp).length - 1));
+                result += `E${valueExp}`;
+            }
+        } else { // Else, truncate numbers with decimals to 11 characters long
+            if (Number(value[screenLength - 2]) >= 5) {
+                result = value.slice(0, screenLength - 1) + String(Number(value[screenLength - 1]) + 1);
+            } else {
+                result = value.slice(0, screenLength);
+            }
         }
         screenOutput.textContent = result;
     }
@@ -87,7 +96,9 @@ function appendDecimal() {
     if (equalFlag) {
         clearFunction();
     }
-    if (displayedNumber.includes('.')) {
+
+    // If the number already has a decimal or if the length is > 9 (to avoid overflow), then do not add decimal.
+    if (displayedNumber.includes('.') || displayedNumber.length > 9) {
         return;
     }
     if (displayedNumber === '0' || !displayedNumber) {
@@ -192,10 +203,6 @@ numberButtons.forEach((button) => button.addEventListener('click', (e) => {
 let decimalButton = document.querySelector('#\\.');
 decimalButton.addEventListener('click', (e) => {
     appendDecimal();
-    e.preventDefault();
-    
-    // Removes focus after clicking.
-    button.blur();
 });
 
 
@@ -288,9 +295,4 @@ document.querySelector('#help').onclick = function() {
       element.className = 'hide';
       document.querySelector('#help').className = '';
     }
-  }
-// TODO
-// KEYBOARD SUPPORT
-
-// REVIEW CSS, MERGE
-// EXTRA EXTRA CREDIT: MEMORY/DISPLAY
+}
