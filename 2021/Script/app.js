@@ -71,11 +71,19 @@ function updateDisplay(value) {
         }
         screenOutput.textContent = result;
     }
+
+    // CE clears last entry, C clears all input
+    if (displayedNumber === '0' || equalFlag) {
+        document.querySelector('#clear').textContent = 'C'
+    } else {
+        document.querySelector('#clear').textContent = 'CE'
+    }
+
 }
 
 function appendNumber(number)  {
     if (equalFlag) {
-        clearFunction();
+        resetAll();
     }
     // Do not allow inputs > screenLength (Design Choice)
     if (displayedNumber.length >= screenLength) {return}
@@ -89,7 +97,7 @@ function appendNumber(number)  {
 
 function appendDecimal() {
     if (equalFlag) {
-        clearFunction();
+        resetAll();
     }
 
     // Prevents duplicate decimal or screen overflow.
@@ -125,6 +133,16 @@ function plusMinus() {
 }
 
 function clearFunction() {
+        // CE to clear last entry. C to clear all.
+        if (!displayedNumber || displayedNumber === '0' || equalFlag) {
+            resetAll();
+        } else {
+            displayedNumber = '0';
+            updateDisplay(displayedNumber);
+        }
+}
+
+function resetAll() {
     displayedNumber = '0';
     truncatedNumber = '0';
     storedNumber = '';
@@ -150,8 +168,8 @@ function deleteFunction() {
 function equalFunction() {
     if (displayedNumber, operation, storedNumber) {
         storedNumber = operate(operatorMap[operation], storedNumber, displayedNumber);
-        updateDisplay(storedNumber);
         equalFlag = true;
+        updateDisplay(storedNumber);
     }
 }
 
@@ -262,7 +280,7 @@ function keyEvent(e) {
                 return appendDecimal();
             case 27:
                 document.getElementById('clear').classList.add('keyPress');
-                return clearButton();
+                return clearFunction();
             case 77:
                 document.getElementById('+-').classList.add('keyPress');
                 return plusMinus();
