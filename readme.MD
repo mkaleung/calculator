@@ -1,5 +1,7 @@
 # Project: Calculator
 
+[Live Preview](https://jincrypt.github.io/calculator/)
+
 ## Criteria:
 * Functionality for addition, subtraction, division, and multiplication
 * Separate function (operate) that takes an operator and 2 numbers to perform an operation
