@@ -1,6 +1,21 @@
-// Math Operations
+// Variables
 let cf = 10; // correction factor for floating point arithmetic
+let operatorMap = {
+    "+": add,
+    "-": subtract,
+    "*": multiply,
+    "/": divide
+};
+let displayedNumber = '0';
+let truncatedNumber = '0';
+let storedNumber = '';
+let operation = '';
+let equalFlag = false;
+let buttons = document.querySelectorAll('button');
+const screenOutput = document.querySelector('#display');
+const screenLength = 11;
 
+// Math Operations
 function add(a, b) {
     return String(Number(a) + Number(b));
 }
@@ -24,23 +39,6 @@ function divide(a, b) {
 function operate(operator, a, b) {
     return operator(a, b);
 }
-
-
-let operatorMap = {
-    "+": add,
-    "-": subtract,
-    "*": multiply,
-    "/": divide
-};
-let displayedNumber = '0';
-let truncatedNumber = '0';
-let storedNumber = '';
-let operation = '';
-let equalFlag = false;
-let buttons = document.querySelectorAll('button');
-const screenOutput = document.querySelector('#display');
-const screenLength = 11;
-
 
 function updateDisplay(value) {
     if (value === 'Infinity') {
@@ -74,8 +72,6 @@ function updateDisplay(value) {
         screenOutput.textContent = result;
     }
 }
-updateDisplay(displayedNumber); // Initialization *I guess i can remove this if i just set HTML to 0 instead of 0000
-
 
 function appendNumber(number)  {
     if (equalFlag) {
@@ -91,14 +87,13 @@ function appendNumber(number)  {
     updateDisplay(displayedNumber);
 }
 
-
 function appendDecimal() {
     if (equalFlag) {
         clearFunction();
     }
 
-    // If the number already has a decimal or if the length is > 9 (to avoid overflow), then do not add decimal.
-    if (displayedNumber.includes('.') || displayedNumber.length > 9) {
+    // Prevents duplicate decimal or screen overflow.
+    if (displayedNumber.includes('.') || displayedNumber.length > screenLength - 2) {
         return;
     }
     if (displayedNumber === '0' || !displayedNumber) {
@@ -192,7 +187,8 @@ buttons.forEach(button => button.addEventListener('click', (e) => {
 // Add Button Animations
 buttons.forEach(button => button.addEventListener('animationend', (e) => {e.target.classList.remove('keyPress')}));
 
-// Set up numbers to click
+// Button setup ('click')
+// Set up numbers
 let numberButtons = document.querySelectorAll('button.input');
 numberButtons.forEach((button) => button.addEventListener('click', (e) => {
     appendNumber(button.id);
@@ -205,13 +201,11 @@ decimalButton.addEventListener('click', (e) => {
     appendDecimal();
 });
 
-
 // Set up +-
 let plusMinusButton = document.querySelector('#\\+\\-');
 plusMinusButton.addEventListener('click', (e) => {
     plusMinus();
 })
-
 
 // Set up delete
 let deleteButton = document.querySelector('#delete');
@@ -219,25 +213,25 @@ deleteButton.addEventListener('click', (e) => {
     deleteFunction();
 })
 
-
 // Set up clear button
 let clearButton = document.querySelector('#clear');
 clearButton.addEventListener('click', (e) => {
     clearFunction();
 })
 
-//TODO ** How to separate operation so button clicks and keyboard works? Might have to do with optional function inputs i.e. operate(button.id (optional))
+// Set up Operations
 let operatorButtons = document.querySelectorAll('button.operator');
 operatorButtons.forEach((button) => button.addEventListener('click', (e) => {
     applyOperation(button.id);
 }))
 
-
+// Set up equal
 let equalButton = document.querySelector('button#\\=');
 equalButton.addEventListener('click', (e) => {
     equalFunction();
 })
 
+// Keyboard Setup ('keydown')
 window.addEventListener('keydown', keyEvent);
 
 function keyEvent(e) {
@@ -280,10 +274,7 @@ function keyEvent(e) {
                 return deleteFunction();
         }
     }
-
-
 }
-
 
 // Toggle Help Button
 document.querySelector('#help').onclick = function() {
