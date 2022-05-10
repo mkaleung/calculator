@@ -1,6 +1,6 @@
 # Project: Calculator
 
-[Live Preview](https://jincrypt.github.io/calculator/)
+[Live Preview](https://mkaleung.github.io/calculator/)
 
 ## Criteria:
 * Functionality for addition, subtraction, division, and multiplication
